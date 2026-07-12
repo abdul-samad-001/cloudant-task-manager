@@ -143,4 +143,4 @@ MIT — free to use and adapt.
 
 ---
 
-*Built by Abdul Samad, B.Tech AI & Machine Learning, United Institute of Technology, Prayagraj.*
+*Developed by Abdul Samad | Full-stack & AI/ML enthusiast*
