@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager — IBM Cloudant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="shell">
+
+    <!-- Signature element: live connection strip, styled like a terminal/log line -->
+    <div class="sync-strip" id="sync-strip" role="status" aria-live="polite">
+      <span class="dot" id="sync-dot"></span>
+      <span id="sync-text">connecting&hellip;</span>
+    </div>
+
+    <main class="card">
+      <header class="card-header">
+        <div>
+          <h1>Task Manager</h1>
+          <p class="tagline">Every task below is a document in a Cloudant database, not a row in a table.</p>
+        </div>
+        <div class="header-actions">
+          <button id="seed-btn" class="ghost-btn" type="button" title="Insert 5 sample tasks via a single bulk request — safe to click repeatedly">
+            + Seed sample data
+          </button>
+          <button id="clear-btn" class="ghost-btn danger" type="button" title="Delete every task">
+            Clear all
+          </button>
+        </div>
+      </header>
+
+      <div id="error-banner" class="error-banner" hidden></div>
+
+      <div class="toolbar">
+        <div class="search-wrap">
+          <input type="search" id="search-input" placeholder="Search tasks…" aria-label="Search tasks" />
+        </div>
+        <div class="filter-tabs" role="tablist" aria-label="Filter tasks">
+          <button class="tab active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="tab" data-filter="active" role="tab" aria-selected="false">Active</button>
+          <button class="tab" data-filter="done" role="tab" aria-selected="false">Completed</button>
+        </div>
+      </div>
+
+      <p class="counts" id="counts"></p>
+
+      <ul id="task-list"></ul>
+
+      <div class="empty-state" id="empty-state" hidden>
+        <p><strong>No tasks logged yet.</strong></p>
+        <p>Add one below — it's written straight to Cloudant as a JSON document.</p>
+      </div>
+
+      <form id="task-form">
+        <input type="text" id="task-input" placeholder="Add a task…" aria-label="New task title" required />
+        <div class="priority-group" role="radiogroup" aria-label="Priority">
+          <button type="button" class="priority-pill" data-priority="low" aria-pressed="false">Low</button>
+          <button type="button" class="priority-pill active" data-priority="medium" aria-pressed="true">Medium</button>
+          <button type="button" class="priority-pill" data-priority="high" aria-pressed="false">High</button>
+        </div>
+        <button type="submit" class="primary-btn">Add</button>
+      </form>
+    </main>
+
+    <p class="footnote">Backend: Node.js/Express &nbsp;·&nbsp; Database: IBM Cloudant (NoSQL) &nbsp;·&nbsp; Container-ready via Docker</p>
+  </div>
+
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
