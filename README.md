@@ -143,4 +143,14 @@ MIT — free to use and adapt.
 
 ---
 
-*Developed by Abdul Samad | Full-stack & AI/ML enthusiast*
+---
+
+<div align="center">
+
+**Developed by Abdul Samad**
+
+*AI & Machine Learning · Full-Stack Development*
+
+[![GitHub](https://img.shields.io/badge/GitHub-abdul--samad--001-181717?style=flat&logo=github&logoColor=white)](https://github.com/abdul-samad-001)
+
+</div>
