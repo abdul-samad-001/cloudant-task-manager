@@ -81,7 +81,17 @@ function render() {
   });
 
   list.innerHTML = '';
-  emptyState.hidden = allTasks.length > 0;
+  emptyState.hidden = filtered.length > 0;
+  if (filtered.length === 0) {
+    if (allTasks.length === 0) {
+      emptyState.querySelector('p:first-child').innerHTML = '<strong>No tasks logged yet.</strong>';
+      emptyState.querySelector('p:last-child').textContent = "Add one below — it's written straight to Cloudant as a JSON document.";
+    } 
+    else {
+      emptyState.querySelector('p:first-child').innerHTML = '<strong>Nothing matches this filter.</strong>';
+      emptyState.querySelector('p:last-child').textContent = 'Try a different tab, or clear your search.';
+    }
+  }
 
   const activeCount = allTasks.filter((t) => !t.done).length;
   countsEl.textContent = allTasks.length

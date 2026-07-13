@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "jetro": {
+      "type": "stdio",
+      "command": "C:\\Users\\Dell\\.jetro\\runtime\\node-win32-x64.exe",
+      "args": [
+        "C:\\Users\\Dell\\.jetro\\mcp-server\\index.js"
+      ],
+      "env": {
+        "JET_WORKSPACE": "d:\\DOWNLOADS\\cloud-task-manager",
+        "JET_API_URL": "https://api.jetro.ai",
+        "PATH": "C:\\Users\\Dell\\.jetro\\runtime;C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.2.10-hotspot\\bin;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files\\dotnet\\;C:\\MinGW\\bin;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\NVIDIA Corporation\\NVIDIA App\\NvDLISR;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Program Files\\nodejs\\;C:\\Users\\Dell\\.local\\bin;C:\\Users\\Dell\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\;C:\\Users\\Dell\\AppData\\Local\\Programs\\Python\\Python312\\;C:\\Users\\Dell\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Java\\jdk-24\\bin;C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2025.1\\bin;C:\\Users\\Dell\\.local\\bin;;C:\\Users\\Dell\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Dell\\AppData\\Local\\Programs\\Ollama;C:\\Users\\Dell\\AppData\\Roaming\\npm;C:\\Users\\Dell\\AppData\\Local\\Programs\\Antigravity\\bin;C:\\Users\\Dell\\.dotnet\\tools;C:\\Users\\Dell\\AppData\\Local\\Programs\\Antigravity IDE\\bin;C:\\Users\\Dell\\AppData\\Local\\PowerToys\\DSCModules\\;C:\\Users\\Dell\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+      }
+    }
+  }
+}
