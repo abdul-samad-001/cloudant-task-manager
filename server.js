@@ -134,11 +134,19 @@ app.post('/api/tasks', async (req, res) => {
 app.post('/api/tasks/seed', async (req, res) => {
   try {
     if (useCloudant) {
-      const existing = await client.postAllDocs({ db: DB_NAME, keys: SEED_IDS });
+      const existing = await client.postAllDocs({ db: DB_NAME, keys: SEED_IDS, includeDocs: true });
       const revMap = {};
+      const docMap = {};
       existing.result.rows.forEach((row) => {
-        if (row.value && row.value.rev) revMap[row.id] = row.value.rev;
+        if (row.value && !row.value.deleted && row.value.rev) {
+          revMap[row.id] = row.value.rev;
+          docMap[row.id] = row.doc;
+        }
       });
+
+      if (SEED_IDS.every((id) => revMap[id])) {
+        return res.status(200).json({ alreadySeeded: true, tasks: SEED_IDS.map((id) => docMap[id]) });
+      }
 
       const docs = SEED_IDS.map((id, i) => {
         const doc = {
@@ -153,11 +161,31 @@ app.post('/api/tasks/seed', async (req, res) => {
       });
 
       const result = await client.postBulkDocs({ db: DB_NAME, bulkDocs: { docs } });
-      const created = docs.map((doc, i) => ({ ...doc, _rev: result.result[i].rev }));
-      return res.status(200).json(created);
+
+      // If any doc hit a conflict (usually a leftover deleted-doc tombstone),
+      // fall back to letting Cloudant assign it a fresh ID instead of failing silently.
+      const finalTasks = [];
+      for (let i = 0; i < result.result.length; i++) {
+        const r = result.result[i];
+        if (r.ok || r.rev) {
+          finalTasks.push({ ...docs[i], _rev: r.rev });
+        } else {
+          const fallbackDoc = { ...docs[i] };
+          delete fallbackDoc._id;
+          delete fallbackDoc._rev;
+          const created = await client.postDocument({ db: DB_NAME, document: fallbackDoc });
+          finalTasks.push({ ...fallbackDoc, _id: created.result.id, _rev: created.result.rev });
+        }
+      }
+
+      return res.status(200).json({ alreadySeeded: false, tasks: finalTasks });
     }
 
-    // In-memory: same upsert semantics — reset if present, insert if not.
+    // in-memory branch stays exactly as it was
+    const alreadyPresent = SEED_IDS.every((id) => memStore.some((t) => t._id === id));
+    if (alreadyPresent) {
+      return res.status(200).json({ alreadySeeded: true, tasks: memStore.filter((t) => SEED_IDS.includes(t._id)) });
+    }
     const created = SEED_IDS.map((id, i) => {
       let task = memStore.find((t) => t._id === id);
       const base = { title: SEED_DATA[i].title, priority: SEED_DATA[i].priority, done: false };
@@ -170,7 +198,7 @@ app.post('/api/tasks/seed', async (req, res) => {
       }
       return task;
     });
-    res.status(200).json(created);
+    res.status(200).json({ alreadySeeded: false, tasks: created });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
