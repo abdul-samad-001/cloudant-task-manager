@@ -10,13 +10,29 @@ A full-stack CRUD web application for managing tasks, backed by **IBM Cloudant**
 ![IBM Cloudant](https://img.shields.io/badge/IBM%20Cloudant-NoSQL-052FAD?logo=ibm&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
+<p align="center">
+  <a href="https://cloudant-task-manager.onrender.com/">
+    <img src="https://img.shields.io/badge/🔗_Live_Demo-cloudant--task--manager.onrender.com-46E3B7?style=for-the-badge&logo=render&logoColor=white" />
+  </a>
+</p>
+
+---
+
+## 🔗 Live Demo
+
+**[cloudant-task-manager.onrender.com](https://cloudant-task-manager.onrender.com/)**
+
+Hosted on Render, connected to a live IBM Cloudant instance — no setup needed to try it.
+
+> ⚠️ Runs on a free-tier instance that sleeps after periods of inactivity. If the first load takes 30–60 seconds, that's just it waking back up — not a bug.
+
 ---
 
 ## What this is
 
 Every task in this app is stored as a **JSON document** in IBM Cloudant — not a row in a table. The UI is deliberately designed around that fact: each task shows its own document ID and revision number, and a live "sync strip" at the top reports the real-time connection state straight from the database.
 
-The app runs identically whether you start it with plain `node server.js` or inside a Docker container, and automatically falls back to an in-memory store when Cloudant credentials aren't configured — so it's always runnable, with or without cloud access.
+The app runs identically whether you start it with plain `node server.js`, inside a Docker container, or as deployed on Render — and automatically falls back to an in-memory store when Cloudant credentials aren't configured, so it's always runnable, with or without cloud access.
 
 ## Architecture
 
@@ -31,6 +47,7 @@ flowchart LR
 - **Backend:** Node.js + Express, exposing a small REST API
 - **Database:** IBM Cloudant, accessed via the official `@ibm-cloud/cloudant` SDK
 - **Containerization:** Docker + Docker Compose
+- **Hosting:** Render (live), Docker (local/portable)
 
 ## Features
 
@@ -53,9 +70,14 @@ flowchart LR
 | Database | IBM Cloudant (NoSQL / CouchDB-compatible document store) |
 | SDK | `@ibm-cloud/cloudant` (official IBM Cloud SDK) |
 | Containerization | Docker, Docker Compose |
+| Hosting | Render |
 | Typography | IBM Plex Sans / IBM Plex Mono |
 
 ## Getting started
+
+### Try it live (fastest)
+
+Just open **[cloudant-task-manager.onrender.com](https://cloudant-task-manager.onrender.com/)** — nothing to install.
 
 ### Run locally (no cloud account needed)
 
@@ -125,23 +147,14 @@ cloud-task-manager/
 | Requirement | How it's met |
 |---|---|
 | CRUD web app | Full create/read/update/delete on tasks |
-| IBM Cloudant NoSQL database | Live integration via `@ibm-cloud/cloudant`, verified working (see screenshots) |
+| IBM Cloudant NoSQL database | Live integration via `@ibm-cloud/cloudant`, verified working |
 | Docker | `Dockerfile` + `docker-compose.yml`, verified running via `docker ps` |
 | From-scratch build | No template/boilerplate — backend, frontend, and infra written for this project |
-
-## Screenshots
-
-_Add these three images to an `assets/` folder in this repo and reference them here:_
-
-1. App UI showing `cloudant:connected` in the sync strip
-2. Terminal output showing `docker compose up --build` completing with `Storage backend: IBM Cloudant`
-3. `docker ps` output showing the container running with port `3000` mapped
+| **Public deployment** *(bonus, not required)* | Live on Render at [cloudant-task-manager.onrender.com](https://cloudant-task-manager.onrender.com/) |
 
 ## License
 
 MIT — free to use and adapt.
-
----
 
 ---
 
