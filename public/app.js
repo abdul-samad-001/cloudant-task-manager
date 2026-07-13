@@ -189,7 +189,10 @@ async function seedTasks() {
   try {
     const res = await fetch('/api/tasks/seed', { method: 'POST' });
     if (!res.ok) throw new Error();
-    showToast('Sample data seeded (5 tasks) — safe to click again, it won\'t duplicate');
+    const data = await res.json();
+    showToast(data.alreadySeeded
+      ? 'Sample data already present — nothing changed'
+      : 'Sample data seeded (5 tasks)');
     await loadTasks();
     await checkStorage();
   } catch {
