@@ -1,5 +1,5 @@
 # ☁️ Cloud-Powered Task Manager
-
+ 
 A full-stack CRUD web application for managing tasks, backed by **IBM Cloudant** — a managed NoSQL document database on IBM Cloud — and packaged with **Docker** for consistent, portable deployment.
 
 > Built as a PBEL (Project-Based Experiential Learning) submission for IBM Cloud Computing.
