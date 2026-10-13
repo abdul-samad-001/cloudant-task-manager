@@ -38,13 +38,13 @@ The app runs identically whether you start it with plain `node server.js`, insid
 
 ```mermaid
 flowchart LR
-    A[Browser<br/>HTML / CSS / JS] -->|HTTP requests| B[Express server<br/>server.js]
+    A[Browser<br/>React + Vite] -->|HTTP requests| B[Express server<br/>server.js]
     B -->|runs inside| C[Docker container]
     B -->|Cloudant REST API| D[(IBM Cloudant<br/>NoSQL database)]
 ```
 
-- **Frontend:** Vanilla HTML/CSS/JS — no framework, no build step
-- **Backend:** Node.js + Express, exposing a small REST API
+- **Frontend:** React 18, Vite, Tailwind CSS — modern reactive single-page app
+- **Backend:** Node.js + Express with modular configuration, routing, services, and error handling
 - **Database:** IBM Cloudant, accessed via the official `@ibm-cloud/cloudant` SDK
 - **Containerization:** Docker + Docker Compose
 - **Hosting:** Render (live), Docker (local/portable)
@@ -52,9 +52,10 @@ flowchart LR
 ## Features
 
 - Full CRUD — create, read, update (title, priority, complete), and delete tasks
+- **Document Explorer** — inspect raw CouchDB/Cloudant JSON document structure (`_id`, `_rev`, fields) in a read-only modal
 - **Live sync strip** — real-time connection status, active database name, and document count, sourced from `/api/health`
-- **Priority levels** (low / medium / high) with color-coded task borders
-- **Search + filter tabs** (All / Active / Completed) with live counts
+- **Priority levels** (low / medium / high) with color-coded badges and border accents
+- **Search, filter & sort** — full-text search, status filters (All / Active / Completed), and priority/date sorting with live stats
 - **Idempotent bulk-seed** (`POST /api/tasks/seed`) — inserts 5 sample tasks via Cloudant's `postBulkDocs` API; safe to click repeatedly, never creates duplicates
 - **Clear-all** endpoint/button for quickly resetting demo data
 - Each task displays its Cloudant document ID and revision number — the document model made visible, not hidden
@@ -65,8 +66,8 @@ flowchart LR
 
 | Layer | Technology |
 |---|---|
-| Frontend | HTML5, CSS3, vanilla JavaScript |
-| Backend | Node.js, Express |
+| Frontend | React 18, Vite, Tailwind CSS |
+| Backend | Node.js, Express (modular service architecture) |
 | Database | IBM Cloudant (NoSQL / CouchDB-compatible document store) |
 | SDK | `@ibm-cloud/cloudant` (official IBM Cloud SDK) |
 | Containerization | Docker, Docker Compose |
@@ -83,10 +84,16 @@ Just open **[cloudant-task-manager.onrender.com](https://cloudant-task-manager.o
 
 ```bash
 npm install
+npm run build
 npm start
 ```
 
 Visit `http://localhost:3000`. Runs in in-memory mode until Cloudant credentials are provided.
+
+For frontend hot-reloading during development:
+```bash
+npm run dev:client
+```
 
 ### Connect to IBM Cloudant
 
@@ -130,12 +137,18 @@ docker run -p 3000:3000 --env-file .env cloud-task-manager
 
 ```
 cloud-task-manager/
-├── server.js            # Express app + Cloudant integration
-├── public/               # Frontend
-│   ├── index.html
-│   ├── style.css
-│   └── app.js
-├── Dockerfile
+├── client/              # React frontend (Vite, Tailwind CSS)
+│   ├── src/
+│   │   ├── api/         # REST API client
+│   │   ├── components/  # TaskItem, Toolbar, StatsBar, DocExplorerModal, etc.
+│   │   └── App.jsx
+│   └── index.html
+├── config/              # Cloudant client configuration & initialization
+├── middleware/          # Express central error handler
+├── routes/              # Express API route handlers (/api/tasks, /api/health)
+├── services/            # Business logic and Cloudant / in-memory storage layer
+├── server.js            # Express server entry point
+├── Dockerfile           # Container build configuration
 ├── docker-compose.yml
 ├── .env.example
 ├── package.json

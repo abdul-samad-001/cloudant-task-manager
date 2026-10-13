@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "npm --prefix client install && npm --prefix client run build",
+    "build:client": "npm --prefix client run build",
+    "dev:client": "npm --prefix client run dev"
   },
   "keywords": ["ibm-cloud", "cloudant", "nosql", "crud", "express"],
   "author": "Abdul Samad",
