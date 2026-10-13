@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #EEF0EB;
+  --color-card: #FFFFFF;
+  --color-ink: #182420;
+  --color-ink-soft: #4B5750;
+  --color-line: #DBDFD7;
+
+  --color-teal: #0D7377;
+  --color-teal-dark: #0A5A5D;
+  --color-teal-tint: #E3F1F1;
+
+  --color-amber: #C97A3E;
+  --color-amber-tint: #FBEEE3;
+
+  --color-moss: #4B7355;
+  --color-moss-tint: #EAF2EB;
+
+  --color-danger: #B5442E;
+  --color-danger-tint: #FBEAE5;
+
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(63, 214, 192, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(63, 214, 192, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(63, 214, 192, 0);
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2.2s infinite;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-toast {
+  animation: toast-in 0.18s ease-out;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-dialog {
+  animation: dialog-in 0.18s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-dot,
+  .animate-toast,
+  .animate-dialog {
+    animation: none !important;
+  }
+}
